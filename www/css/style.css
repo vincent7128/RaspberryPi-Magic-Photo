@@ -1,0 +1,36 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    text-align: center;
+}
+
+img {
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+}
+
+.photo {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: 306px;
+    left: 0;
+    right: 0;
+}
+
+.photo-a {
+    display: none;
+    z-index: 2;
+}
+
+.photo-b {
+    display: none;
+    z-index: 2;
+}
+
+.poster-frame {
+    z-index: 3;
+    position: relative;
+}
