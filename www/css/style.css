@@ -8,26 +8,16 @@ html, body {
 img {
     margin: 0 auto;
     padding: 0;
-    display: block;
 }
 
 .photo {
-    display: block;
-    margin: 0 auto;
     position: absolute;
-}
-
-.photo-a {
     display: none;
-    z-index: 2;
+    z-index: 1;
 }
 
-.photo-b {
-    display: none;
-    z-index: 2;
-}
-
-.poster-frame {
-    z-index: 3;
+.photo.frame {
+    display: block;
     position: relative;
+    z-index: 2;
 }
