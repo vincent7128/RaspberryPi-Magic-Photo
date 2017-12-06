@@ -10,7 +10,7 @@ function animationStop() {
     gif.style.setProperty('display', '');
 }
 
-function adjustPosition() {
+function adjustPhotoPosition() {
     var top = (window.innerHeight - frame.height) / 2,
         left = (window.innerWidth - png.width) / 2;
     png.style.setProperty('top', top + 306 + 'px');
@@ -24,9 +24,14 @@ window.onload = function () {
     png = document.querySelector('.png');
     gif = document.querySelector('.gif');
     frame = document.querySelector('.frame');
-    adjustPosition();
-    setTimeout(animationStart, 1000);
-    setTimeout(animationStop, 10000);
+    adjustPhotoPosition();
+    io().on('action', function (action) {
+        if (action) {
+            animationStart();
+        } else {
+            animationStop();
+        }
+    })
 };
 
-window.onresize = adjustPosition;
+window.onresize = adjustPhotoPosition;

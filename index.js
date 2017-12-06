@@ -1,7 +1,11 @@
 var http = require("http"),
     url = require('url'),
     fs = require('fs'),
-    mime = require('mime');
+    mime = require('mime'),
+    io = require('socket.io')(http),
+    action = false,
+    clients = 0,
+    interval;
 
 var server = http.createServer(function(request, response) {
     var path = url.parse(request.url).pathname;
@@ -25,3 +29,28 @@ var server = http.createServer(function(request, response) {
 });
 
 server.listen(8000);
+
+setInterval(function () {
+    action = action ? false : true;
+}, 300);
+
+io.listen(server);
+io.on('connection', function(client) {
+    clients++;
+    client.emit('action', action);
+    if (!interval) {
+        interval = setInterval(function () {
+            io.sockets.emit('action', action);
+        }, 3000);
+    }
+    client.on('disconnect', function() {
+        clients--;
+        if (!clients) {
+            clearInterval(interval);
+        }
+        console.log('clients', clients);
+    });
+    console.log('clients', clients);
+});
+
+// TODO gpio change action
