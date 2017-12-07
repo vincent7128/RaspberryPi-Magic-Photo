@@ -3,10 +3,10 @@ Raspberry Pi - Magic Photo
 Work on Raspberry Pi use GPIO listen PIR sensor send command through WebSocket, Make photo live to be like as "Harry Potter" magic photo.
 
 ## System Environment
-Raspberry Pi 3
-OS: RASPBIAN STRETCH WITH DESKTOP - 2017-11-29
-nodejs:
-pigpio:
+Raspberry Pi 3<br>
+OS: RASPBIAN STRETCH WITH DESKTOP - 2017-11-29<br>
+nodejs: v4.8.2<br>
+pigpio: 1.64-1
 
 ## Wiring diagram
 
@@ -24,7 +24,7 @@ $ sudo node index.js
 ## Full screen mode
 *** before you run under command, close all browser window ***
 ```
-$ chromium-browser --kiosk
+$ chromium-browser --kiosk http://localhost:8000
 ```
 
 ## License
