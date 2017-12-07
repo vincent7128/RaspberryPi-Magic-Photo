@@ -1,0 +1,27 @@
+{
+  "name": "RaspberryPi-Magic-Photo",
+  "version": "0.1.0",
+  "description": "Raspberry Pi magic photo system, use PIR sensor to activate photo to be like as \"Harry Potter\" magic photo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincent7128/RaspberryPi-Magic-Photo.git"
+  },
+  "keywords": [
+    "Raspberry Pi",
+    "GPIO",
+    "WebSocket"
+  ],
+  "author": "Vincent Chen <vincent@pinpin.link>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vincent7128/RaspberryPi-Magic-Photo/issues"
+  },
+  "dependencies": {
+      "mime": "^2.0.3",
+      "socket.io": "^2.0.4"
+  }
+}

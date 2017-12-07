@@ -3,9 +3,14 @@ var http = require("http"),
     fs = require('fs'),
     mime = require('mime'),
     io = require('socket.io')(http),
+    Gpio = require('pigpio').Gpio,
+    pir = new Gpio(17, {
+        mode: Gpio.INPUT,
+        alert: true
+    }),
     action = false,
     clients = 0,
-    interval;
+    timeout;
 
 var server = http.createServer(function(request, response) {
     var path = url.parse(request.url).pathname;
@@ -29,28 +34,51 @@ var server = http.createServer(function(request, response) {
 });
 
 server.listen(8000);
-
-setInterval(function () {
-    action = action ? false : true;
-}, 300);
+console.log('server init @8000');
 
 io.listen(server);
 io.on('connection', function(client) {
     clients++;
+    console.log('new client');
+    console.log('clients', clients);
+    console.log('client emit action', action);
     client.emit('action', action);
-    if (!interval) {
-        interval = setInterval(function () {
-            io.sockets.emit('action', action);
-        }, 3000);
-    }
     client.on('disconnect', function() {
         clients--;
         if (!clients) {
-            clearInterval(interval);
+            clearTimeout(timeout);
+            timeout = 0;
         }
         console.log('clients', clients);
     });
-    console.log('clients', clients);
 });
 
-// TODO gpio change action
+pir.on('alert', function(level, tick) {
+    console.log('alert', level);
+    if (timeout) {
+        clearTimeout(timeout);
+        timeout = 0;
+    }
+    if (level === 1) {
+        if (!clients) {
+            console.log('No clients!');
+            return;
+        }
+        if (action) {
+            return;
+        }
+        console.log('sockets emit action', action);
+        action = true;
+        console.log('sockets emit action', action);
+        io.sockets.emit('action', action);
+    } else {
+        if (!clients || timeout) {
+            return;
+        }
+        timeout = setTimeout(function () {
+            action = false;
+            console.log('sockets emit action', action);
+            io.sockets.emit('action', action);
+        }, 5000);
+    }
+});
